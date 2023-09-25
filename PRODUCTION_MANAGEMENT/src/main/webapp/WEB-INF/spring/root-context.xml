@@ -19,8 +19,9 @@
 	<!--<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"></property> -->
 	<!-- <property name="jdbcUrl" value="jdbc:oracle:thin:@127.0.0.1:1521:xe"></property> -->
 	<bean id="hikariConfig" class="com.zaxxer.hikari.HikariConfig">
-	<property name="driverClassName" value="com.mysql.cj.jdbc.Driver"></property>
-	<property name="jdbcUrl" value="jdbc:mysql://127.0.0.1:3306/mit"></property>
+	<!--  드라이버 에서 sql 쿼리 확인할수있는 쿼리 드라이버 주소로 검색  -->
+	<property name="driverClassName" value="net.sf.log4jdbc.sql.jdbcapi.DriverSpy"></property>
+	<property name="jdbcUrl" value="jdbc:log4jdbc:mysql://127.0.0.1:3306/mit"></property>
 	<property name="username" value="aaa"></property>
 	<property name="password" value="1234"></property>
 	
