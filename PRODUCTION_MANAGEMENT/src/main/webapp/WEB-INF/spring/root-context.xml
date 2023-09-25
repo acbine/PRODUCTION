@@ -1,8 +1,40 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd">
+	xmlns:mybatis-spring="http://mybatis.org/schema/mybatis-spring"
+	xsi:schemaLocation="http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring-1.2.xsd
+		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd">
 	
 	<!-- Root Context: defines shared resources visible to all other web components -->
+	<!-- 스프링에서 관리되는 객체를 검색할 패키지명-->
+	
+	<!-- mybatis 연결주소 -->
+	<mybatis-spring:scan base-package="production.management.dao" />
+	
+	
+	
+	<!-- HikariCP 객체 등록-->
+	<!-- HikariConfig hikraiConfig = new HikariConfig() -->
+	<!--hikariConfi.setDriverClassName("oracle.jdbc.driver.OracleDriver") -->
+	<!--<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"></property> -->
+	<!-- <property name="jdbcUrl" value="jdbc:oracle:thin:@127.0.0.1:1521:xe"></property> -->
+	<bean id="hikariConfig" class="com.zaxxer.hikari.HikariConfig">
+	<property name="driverClassName" value="com.mysql.cj.jdbc.Driver"></property>
+	<property name="jdbcUrl" value="jdbc:mysql://127.0.0.1:3306/mit"></property>
+	<property name="username" value="aaa"></property>
+	<property name="password" value="1234"></property>
+	
+	</bean>
+	
+	<!-- HikariDataSource dataSource = new HikariDataSource dataSource(hikariConfig)--> 
+	<!-- dataSource 라는 객체를 테스트한다 그렇다면 이것을테스트하기위해 spring test 라이브러리가필요 dataSource안에 hikraiConfig가 들어가있으모 테스트가되는것이다    -->
+	<bean id="dataSource" class="com.zaxxer.hikari.HikariDataSource">
+		<constructor-arg ref="hikariConfig"> </constructor-arg>	
+	</bean>
+	
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean"> <!-- Mysql 서버와 MyBatis를 연결해주는건 SqlSessionFactory라는 객체 -->
+		<property name="dataSource" ref="dataSource"></property>
+	
+	</bean>
 		
 </beans>
